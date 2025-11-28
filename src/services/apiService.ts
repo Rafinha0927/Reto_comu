@@ -5,8 +5,8 @@
 // VITE_API_BASE_URL=https://your-api-gateway.execute-api.region.amazonaws.com/production
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string) ||
-  'https://your-api-gateway.execute-api.region.amazonaws.com/production';
-// Ejemplo real: https://abc123def.execute-api.us-east-1.amazonaws.com/production
+  'https://8gcbzi8fzk.execute-api.us-east-1.amazonaws.com/production';
+// Ejemplo real: arn:aws:dynamodb:us-east-2:836149532384:table/Dashboard_IoT_User
 
 interface SensorData {
   id: string;

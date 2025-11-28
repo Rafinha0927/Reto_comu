@@ -18,7 +18,8 @@ import { toast } from "sonner";
 // CONFIGURACIÓN DE API Y WEBSOCKET
 // ============================================================================
 // DINÁMICO: Reemplazar con las URLs reales de producción
-const WEBSOCKET_URL = "ws://localhost:8080/sensors"; // Ejemplo: wss://your-api.com/sensors
+const WEBSOCKET_URL = (import.meta.env.VITE_WEBSOCKET_URL as string) ||
+  "wss://b5yrr6dcq0.execute-api.us-east-1.amazonaws.com/production/";
 const API_POLLING_INTERVAL = 30000; // 30 segundos
 
 // DATOS MOCK - DINÁMICO: Estos datos se reemplazarán con llamadas a la API REST
@@ -297,7 +298,7 @@ function AppContent() {
               <ConfigurationView 
                 isConnected={isConnected}
                 websocketUrl={WEBSOCKET_URL}
-                apiUrl="https://your-api-gateway.execute-api.region.amazonaws.com/production"
+                apiUrl={import.meta.env.VITE_API_BASE_URL || "https://your-api-gateway.execute-api.region.amazonaws.com/production"}
               />
             </div>
           )}

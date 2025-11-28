@@ -11,7 +11,7 @@ interface UseWebSocketOptions {
 
 export function useWebSocket(options: UseWebSocketOptions) {
   const {
-    url,
+    url= 'wss://b5yrr6dcq0.execute-api.us-east-1.amazonaws.com/production',
     autoConnect = true,
     reconnectInterval = 3000,
     maxReconnectAttempts = 5,
@@ -28,17 +28,13 @@ export function useWebSocket(options: UseWebSocketOptions) {
   const connect = useCallback(() => {
     try {
       // DINÁMICO: Reemplazar con la URL real del WebSocket
-      // Ejemplo: ws://api.iotserver.com/sensors o wss://your-api-gateway.execute-api.region.amazonaws.com/production
+      //wss:b5yrr6dcq0.execute-api.us-east-1.amazonaws.com/production
       
       // Para desarrollo, usamos un mock que simula conexión
       console.log(`[WebSocket] Intentando conectar a: ${url}`);
       
-      // Simulación de conexión exitosa (remover en producción)
-      setIsConnected(true);
-      setError(null);
-      reconnectAttemptsRef.current = 0;
       
-      /* 
+       
       // PRODUCCIÓN: Descomentar este código para conexión real
       const ws = new WebSocket(url);
       
@@ -82,7 +78,7 @@ export function useWebSocket(options: UseWebSocketOptions) {
       };
 
       wsRef.current = ws;
-      */
+      
       
     } catch (err) {
       console.error('[WebSocket] Error al conectar:', err);
