@@ -11,12 +11,6 @@
 // URL base del CloudFront Distribution
 const CLOUDFRONT_BASE_URL = import.meta.env.VITE_CLOUDFRONT_URL || 'https://d2h8nqd60uagyp.cloudfront.net';
 
-// Debug logging
-if (import.meta.env.DEV) {
-  console.log('🌩️ CloudFront Base URL:', CLOUDFRONT_BASE_URL);
-  console.log('🔍 Environment:', import.meta.env.MODE);
-}
-
 /**
  * Configuración de Point Clouds
  * Rutas: /pointclouds/...
@@ -31,21 +25,11 @@ export const POINTCLOUDS = {
 
 /**
  * Configuración de Librerías
- * Rutas: /libs/... y /build/...
+ * Rutas: /libs/...
  */
 export const LIBRARIES = {
-  // Potree Main Library - Usar versión disponible en CDN
-  potreeJS: `https://unpkg.com/potree@1.7.9/build/potree.js`,
-  potreeCSS: `https://unpkg.com/potree@1.7.9/build/potree.css`,
-  
-  // Three.js (requerido por Potree)
-  threeJS: 'https://unpkg.com/three@r108/build/three.min.js',
-  
-  // Potree Workers
-  potreeWorkers: `${CLOUDFRONT_BASE_URL}/build/potree/workers/`,
-  
-  // Shaders
-  potreeShaders: `${CLOUDFRONT_BASE_URL}/build/potree/shaders/`,
+  // Path a librerías si las necesitas servir desde CloudFront
+  // Ejemplo: potree: `${CLOUDFRONT_BASE_URL}/libs/potree/potree.js`,
 };
 
 /**
@@ -53,17 +37,8 @@ export const LIBRARIES = {
  * Rutas: /examples/...
  */
 export const EXAMPLES = {
-  // Ejemplos del Reto Comu
-  ca13: `${CLOUDFRONT_BASE_URL}/examples/ca13.html`,
-  animationPaths: `${CLOUDFRONT_BASE_URL}/examples/animation_paths.html`,
-  annotations: `${CLOUDFRONT_BASE_URL}/examples/annotations.html`,
-  cesiumCA13: `${CLOUDFRONT_BASE_URL}/examples/cesium_ca13.html`,
-  clippingVolume: `${CLOUDFRONT_BASE_URL}/examples/clipping_volume.html`,
-  elevationProfile: `${CLOUDFRONT_BASE_URL}/examples/elevation_profile.html`,
-  measurements: `${CLOUDFRONT_BASE_URL}/examples/measurements.html`,
-  lightCA13: `${CLOUDFRONT_BASE_URL}/examples/light_ca13.html`,
-  
-  // Agrega más ejemplos según necesites
+  // Puedes referenciar ejemplos HTML del Reto Comu
+  // Ejemplo: reto_comu_main: `${CLOUDFRONT_BASE_URL}/examples/ca13.html`,
 };
 
 /**
