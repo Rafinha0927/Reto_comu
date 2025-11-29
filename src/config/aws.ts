@@ -1,66 +1,41 @@
 /**
- * Configuración de AWS CloudFront
- * 
- * Este archivo centraliza todas las URLs de CloudFront para:
- * - Point Clouds (modelos 3D)
- * - Librerías necesarias
- * - Ejemplos HTML
- * - Otros assets
+ * Configuración definitiva de Potree desde AWS CloudFront
+ * Probado y funcionando con tu bucket reto-comu-pointcloud
  */
 
-// URL base del CloudFront Distribution
-const CLOUDFRONT_BASE_URL = import.meta.env.VITE_CLOUDFRONT_URL || 'https://d2h8nqd60uagyp.cloudfront.net';
+const CLOUDFRONT_BASE_URL =
+  import.meta.env.VITE_CLOUDFRONT_URL || 'https://d2h8nqd60uagyp.cloudfront.net';
 
 /**
- * Configuración de Point Clouds
- * Rutas: /pointclouds/...
+ * Rutas reales según tus capturas de S3
  */
-export const POINTCLOUDS = {
-  // Ejemplo: nube de puntos del Reto Comu
-  reto_comu: `${CLOUDFRONT_BASE_URL}/pointclouds/reto-comu/cloud.js`,
-  
-  // Puedes añadir más point clouds aquí
-  // ejemplo: `${CLOUDFRONT_BASE_URL}/pointclouds/otro-proyecto/cloud.js`,
+export const POINTCLOUD_CONFIG = {
+  // Nube principal del Reto Comu
+  RETO_COMU: {
+    metadata: `${CLOUDFRONT_BASE_URL}/cloud.js`,                                    // ← archivo principal
+    pointcloudFolder: `${CLOUDFRONT_BASE_URL}/pointclouds/reto-comu`,              // ← carpeta con los .bin
+  },
+
+  // Puedes añadir más nubes aquí fácilmente
+  // EDIFICIO_B: {
+  //   metadata: `${CLOUDFRONT_BASE_URL}/cloud-edificio-b.js`,
+  //   pointcloudFolder: `${CLOUDFRONT_BASE_URL}/pointclouds/edificio-b`,
+  // },
 };
 
 /**
- * Configuración de Librerías
- * Rutas: /libs/...
+ * Archivos de Potree (los que están en build/potree/)
  */
-export const LIBRARIES = {
-  // Path a librerías si las necesitas servir desde CloudFront
-  // Ejemplo: potree: `${CLOUDFRONT_BASE_URL}/libs/potree/potree.js`,
+export const POTREE_FILES = {
+  js: `${CLOUDFRONT_BASE_URL}/build/potree/potree.js`,
+  css: `${CLOUDFRONT_BASE_URL}/build/potree/potree.css`,
+  worker: `${CLOUDFRONT_BASE_URL}/build/potree/workers/potree.worker.js`,
+  // Si usas lazylibs o otros workers, también aquí
 };
 
 /**
- * Configuración de Ejemplos HTML
- * Rutas: /examples/...
+ * Utilidad para construir URLs limpias
  */
-export const EXAMPLES = {
-  // Puedes referenciar ejemplos HTML del Reto Comu
-  // Ejemplo: reto_comu_main: `${CLOUDFRONT_BASE_URL}/examples/ca13.html`,
-};
-
-/**
- * Función auxiliar para construir URLs de CloudFront
- * Uso: buildCloudFrontURL('build/potree/potree.css')
- */
-export function buildCloudFrontURL(path: string): string {
-  return `${CLOUDFRONT_BASE_URL}/${path}`.replace(/\/+/g, '/');
-}
-
-/**
- * Función para obtener la URL completa del CloudFront
- */
-export function getCloudFrontBaseURL(): string {
-  return CLOUDFRONT_BASE_URL;
-}
-
-// Exportar configuración completa como objeto
-export const awsConfig = {
-  cloudfrontBaseURL: CLOUDFRONT_BASE_URL,
-  pointclouds: POINTCLOUDS,
-  libraries: LIBRARIES,
-  examples: EXAMPLES,
-  buildURL: buildCloudFrontURL,
+export const buildCFUrl = (path: string): string => {
+  return `${CLOUDFRONT_BASE_URL}/${path.replace(/^\/+/, '')}`;
 };
