@@ -6,6 +6,7 @@ import { Badge } from './ui/badge';
 import { Switch } from './ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Settings, Database, Wifi, Cloud, Code, CheckCircle2, XCircle } from 'lucide-react';
+import { awsConfig } from '../config/aws';
 
 interface ConfigurationViewProps {
   isConnected: boolean;
@@ -306,12 +307,19 @@ export function ConfigurationView({ isConnected, websocketUrl, apiUrl }: Configu
 
               <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                 <h4 className="text-blue-900 dark:text-blue-300 mb-3">
-                  S3 - Archivos de Nube de Puntos (Potree)
+                  S3 + CloudFront - Nube de Puntos 3D (Potree)
                 </h4>
                 <div className="space-y-2 text-sm text-blue-800 dark:text-blue-400">
-                  <p>• Bucket: <code className="bg-white dark:bg-gray-900 px-2 py-1 rounded">iot-potree-data</code></p>
+                  <p>• Bucket: <code className="bg-white dark:bg-gray-900 px-2 py-1 rounded">reto-comu-pointcloud</code></p>
                   <p>• Región: <code className="bg-white dark:bg-gray-900 px-2 py-1 rounded">us-east-1</code></p>
-                  <p>• CloudFront: Habilitado para CDN</p>
+                  <p>• CloudFront Distribution: <code className="bg-white dark:bg-gray-900 px-2 py-1 rounded break-all">{awsConfig.cloudfrontBaseURL}</code></p>
+                  <p className="pt-2">• Archivos disponibles:</p>
+                  <ul className="ml-4 space-y-1">
+                    <li>✓ /build/potree/ - Librerías de Potree</li>
+                    <li>✓ /pointclouds/ - Nubes de puntos 3D</li>
+                    <li>✓ /examples/ - Ejemplos HTML</li>
+                    <li>✓ /docs/ - Documentación</li>
+                  </ul>
                 </div>
               </div>
 

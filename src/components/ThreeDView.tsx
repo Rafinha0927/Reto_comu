@@ -3,6 +3,7 @@ import { Badge } from './ui/badge';
 import { Maximize2, RefreshCw, Box } from 'lucide-react';
 import { Button } from './ui/button';
 import { useEffect, useRef, useState } from 'react';
+import { POINTCLOUDS } from '../config/aws';
 
 interface Sensor {
   id: string;
@@ -23,8 +24,8 @@ export function ThreeDView({ sensors, onSensorClick, selectedSensorId }: ThreeDV
   const potreeContainerRef = useRef<HTMLDivElement>(null);
   const [potreeLoaded, setPotreeLoaded] = useState(false);
 
-  // CAMBIA ESTA ÚNICA LÍNEA CON TU URL REAL DE S3 O CLOUDFRONT
-  const POINTCLOUD_URL = "https://d2h8nqd60uagyp.cloudfront.net/cloud.js";
+  // Usar la configuración de AWS CloudFront para cargar la nube de puntos
+  const POINTCLOUD_URL = POINTCLOUDS.reto_comu;
 
   useEffect(() => {
     // Evitamos cargar Potree dos veces

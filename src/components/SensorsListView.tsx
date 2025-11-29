@@ -6,7 +6,7 @@ import { Input } from './ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { Search, MapPin, Thermometer, Droplets, Activity, RefreshCw } from 'lucide-react';
 import { apiService } from '../services/apiService';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface Sensor {
   id: string;
