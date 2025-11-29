@@ -3,7 +3,7 @@ import { Badge } from './ui/badge';
 import { Maximize2, RefreshCw, Box } from 'lucide-react';
 import { Button } from './ui/button';
 import { useEffect, useRef, useState } from 'react';
-import { POINTCLOUDS } from '../config/aws';
+import { POINTCLOUDS, LIBRARIES } from '../config/aws';
 
 interface Sensor {
   id: string;
@@ -23,6 +23,7 @@ interface ThreeDViewProps {
 export function ThreeDView({ sensors, onSensorClick, selectedSensorId }: ThreeDViewProps) {
   const potreeContainerRef = useRef<HTMLDivElement>(null);
   const [potreeLoaded, setPotreeLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Usar la configuración de AWS CloudFront para cargar la nube de puntos
   const POINTCLOUD_URL = POINTCLOUDS.reto_comu;
@@ -31,19 +32,46 @@ export function ThreeDView({ sensors, onSensorClick, selectedSensorId }: ThreeDV
     // Evitamos cargar Potree dos veces
     if (potreeLoaded || !potreeContainerRef.current) return;
 
-    // Cargar CSS de Potree
+    console.log('📦 Cargando Potree desde:', LIBRARIES.potreeJS);
+    console.log('☁️ Cargando Point Cloud desde:', POINTCLOUD_URL);
+
+    // Cargar CSS de Potree desde CloudFront
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'https://cdn.jsdelivr.net/npm/potree@1.8/build/potree/potree.css';
+    link.href = LIBRARIES.potreeCSS;
+    link.onerror = () => {
+      console.error('❌ Error cargando CSS de Potree:', LIBRARIES.potreeCSS);
+      setError('Error cargando estilos de Potree');
+    };
+    link.onload = () => {
+      console.log('✅ CSS de Potree cargado correctamente');
+    };
     document.head.appendChild(link);
 
-    // Cargar Potree JS
+    // Cargar Potree JS desde CloudFront
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/potree@1.8/build/potree/potree.js';
+    script.src = LIBRARIES.potreeJS;
     script.async = true;
+    script.crossOrigin = 'anonymous';
+
+    script.onerror = () => {
+      console.error('❌ Error cargando Potree JS:', LIBRARIES.potreeJS);
+      setError('Error cargando librería Potree');
+      setPotreeLoaded(false);
+    };
 
     script.onload = () => {
+      console.log('✅ Potree JS cargado correctamente');
       setPotreeLoaded(true);
+
+      // Verificar que Potree está disponible en window
+      if (!(window as any).Potree) {
+        console.error('❌ Potree no está disponible en window después de cargar');
+        setError('Potree no se cargó correctamente');
+        return;
+      }
+
+      console.log('🎬 Inicializando visor Potree');
 
       // @ts-ignore – Potree se carga en window
       const viewer = new (window as any).Potree.Viewer(potreeContainerRef.current, {
@@ -58,7 +86,9 @@ export function ThreeDView({ sensors, onSensorClick, selectedSensorId }: ThreeDV
       viewer.loadGUI();
 
       // CARGAR LA NUBE DE PUNTOS REAL
+      console.log('🌐 Iniciando carga del point cloud...');
       (window as any).Potree.loadPointCloud(POINTCLOUD_URL, "reto-comu", (e: any) => {
+        console.log('✅ Point cloud cargado exitosamente:', e);
         const pointcloud = e.pointcloud;
         const material = pointcloud.material;
         material.size = 1.8;
@@ -91,6 +121,9 @@ export function ThreeDView({ sensors, onSensorClick, selectedSensorId }: ThreeDV
             viewer.scene.view.lookAt(pos);
           }
         });
+      }, (error: any) => {
+        console.error('❌ Error cargando point cloud:', error);
+        setError(`Error cargando point cloud: ${error.message || error}`);
       });
     };
 
@@ -119,6 +152,19 @@ export function ThreeDView({ sensors, onSensorClick, selectedSensorId }: ThreeDV
         </div>
       </div>
 
+      {/* Mostrar error si existe */}
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-900 to-black z-40">
+          <div className="text-center text-white">
+            <div className="text-xl font-bold mb-4">⚠️ Error cargando Point Cloud</div>
+            <div className="text-sm bg-red-950/50 p-4 rounded max-w-md">{error}</div>
+            <div className="mt-4 text-xs text-gray-300">
+              Revisa la consola (F12) para más detalles
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Contenedor Potree */}
       <div
         ref={potreeContainerRef}
@@ -127,10 +173,15 @@ export function ThreeDView({ sensors, onSensorClick, selectedSensorId }: ThreeDV
       />
 
       {/* Fallback mientras carga Potree */}
-      {!potreeLoaded && (
+      {!potreeLoaded && !error && (
         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
-          <div className="text-white text-xl animate-pulse">
-            Cargando nube de puntos 3D desde AWS...
+          <div className="text-white text-center">
+            <div className="text-xl animate-pulse mb-4">
+              Cargando nube de puntos 3D desde AWS...
+            </div>
+            <div className="text-xs text-gray-400">
+              CloudFront: {POINTCLOUD_URL}
+            </div>
           </div>
         </div>
       )}

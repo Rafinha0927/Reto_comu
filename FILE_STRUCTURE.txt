@@ -1,0 +1,95 @@
+```
+Diseñar Dashboard IoT Moderno (1)/
+│
+├── .env.example ✨ NUEVO
+│   └── Variables de entorno incluyendo VITE_CLOUDFRONT_URL
+│
+├── AWS_CLOUDFRONT_GUIDE.md ✨ NUEVO
+│   └── Documentación completa de uso de CloudFront
+│
+├── IMPLEMENTATION_SUMMARY.md ✨ NUEVO
+│   └── Resumen ejecutivo de la implementación
+│
+├── package.json
+├── vite.config.ts
+├── index.html
+├── README.md
+│
+└── src/
+    ├── env.d.ts ⭐ MODIFICADO
+    │   └── Agregada variable VITE_CLOUDFRONT_URL
+    │
+    ├── App.tsx
+    ├── main.tsx
+    ├── index.css
+    │
+    ├── config/ ✨ NUEVO DIRECTORIO
+    │   ├── aws.ts ✨ NUEVO - Configuración centralizada de AWS CloudFront
+    │   └── aws.examples.ts ✨ NUEVO - Patrones avanzados y ejemplos
+    │
+    ├── components/
+    │   ├── ThreeDView.tsx ⭐ MODIFICADO
+    │   │   └── Ahora importa y usa POINTCLOUDS.reto_comu desde config/aws.ts
+    │   │
+    │   ├── ConfigurationView.tsx ⭐ MODIFICADO
+    │   │   └── Muestra URL del CloudFront dinámicamente
+    │   │
+    │   ├── Header.tsx
+    │   ├── Sidebar.tsx
+    │   ├── SensorPanel.tsx
+    │   ├── SensorsListView.tsx
+    │   ├── KPICards.tsx
+    │   ├── AlertsPanel.tsx
+    │   ├── HistoryView.tsx
+    │   ├── RealtimeChart.tsx
+    │   │
+    │   ├── figma/
+    │   │   └── ImageWithFallback.tsx
+    │   │
+    │   └── ui/
+    │       ├── accordion.tsx
+    │       ├── alert-dialog.tsx
+    │       ├── alert.tsx
+    │       ├── ... (resto de componentes UI)
+    │
+    ├── contexts/
+    │   └── DarkModeContext.tsx
+    │
+    ├── hooks/
+    │   └── useWebSocket.ts
+    │
+    ├── services/
+    │   └── apiService.ts
+    │
+    ├── styles/
+    │   └── globals.css
+    │
+    ├── types/
+    │   └── websocket.ts
+    │
+    └── guidelines/
+        └── Guidelines.md
+```
+
+## Leyenda de Cambios
+
+- ✨ **NUEVO** - Archivos completamente nuevos
+- ⭐ **MODIFICADO** - Archivos existentes que fueron actualizados
+- (sin marcador) - Archivos sin cambios
+
+## Cambios Resumidos
+
+### Archivos Nuevos (4 archivos)
+1. `src/config/aws.ts` - Configuración centralizada de CloudFront
+2. `src/config/aws.examples.ts` - Ejemplos y patrones avanzados
+3. `.env.example` - Template de variables de entorno
+4. `AWS_CLOUDFRONT_GUIDE.md` - Documentación de uso
+
+### Archivos Modificados (3 archivos)
+1. `src/env.d.ts` - Agregada variable VITE_CLOUDFRONT_URL
+2. `src/components/ThreeDView.tsx` - Usa configuración de AWS
+3. `src/components/ConfigurationView.tsx` - Muestra URL de CloudFront
+
+### Archivos de Documentación (2 archivos)
+1. `IMPLEMENTATION_SUMMARY.md` - Este resumen
+2. `AWS_CLOUDFRONT_GUIDE.md` - Guía detallada

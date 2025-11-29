@@ -14,6 +14,9 @@ import { useWebSocket } from "./hooks/useWebSocket";
 import { apiService } from "./services/apiService";
 import { toast } from "sonner";
 
+// Importar diagnostic para desarrollo
+import './config/diagnostic';
+
 // ============================================================================
 // CONFIGURACIÓN DE API Y WEBSOCKET
 // ============================================================================
