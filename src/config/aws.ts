@@ -34,16 +34,12 @@ export const POINTCLOUDS = {
  * Rutas: /libs/... y /build/...
  */
 export const LIBRARIES = {
-  // Potree Main Library - Usar CDN público mientras CloudFront no tenga permisos
-  potreeJS: `https://cdn.jsdelivr.net/npm/potree@1.8/build/potree/potree.js`,
-  potreeCSS: `https://cdn.jsdelivr.net/npm/potree@1.8/build/potree/potree.css`,
-  
-  // Alternativa CloudFront (descomenta cuando S3 tenga permisos públicos)
-  // potreeJS: `${CLOUDFRONT_BASE_URL}/build/potree/potree.js`,
-  // potreeCSS: `${CLOUDFRONT_BASE_URL}/build/potree/potree.css`,
+  // Potree Main Library - Usar versión disponible en CDN
+  potreeJS: `https://unpkg.com/potree@1.7.9/build/potree.js`,
+  potreeCSS: `https://unpkg.com/potree@1.7.9/build/potree.css`,
   
   // Three.js (requerido por Potree)
-  threeJS: 'https://cdn.jsdelivr.net/npm/three@r128/build/three.min.js',
+  threeJS: 'https://unpkg.com/three@r108/build/three.min.js',
   
   // Potree Workers
   potreeWorkers: `${CLOUDFRONT_BASE_URL}/build/potree/workers/`,
