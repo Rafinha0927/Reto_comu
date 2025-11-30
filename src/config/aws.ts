@@ -1,45 +1,45 @@
 /**
  * Configuración de AWS CloudFront
- * ACTUALIZADO CON LAS RUTAS REALES DE TU S3
+ * CORREGIDO CON LAS RUTAS REALES DE TU S3
  */
 
 // URL base del CloudFront Distribution
 const CLOUDFRONT_BASE_URL = import.meta.env.VITE_CLOUDFRONT_URL || 'https://d2h8nqd60uagyp.cloudfront.net';
 
+// Ruta base real en tu S3
+const S3_BASE_PATH = 'reto-comu-arreglado-main/reto-comu-arreglado-main';
+
 /**
  * Configuración de Point Clouds
- * Basado en tu estructura real de S3: /pointclouds/Puntos/
+ * Basado en tu estructura REAL de S3
  */
 export const POINTCLOUDS = {
-  // Nube de puntos del Reto Comu (ruta real de tu S3)
-  reto_comu: `${CLOUDFRONT_BASE_URL}/pointclouds/Puntos/cloud.js`,
+  // Nube de puntos del Reto Comu (ruta REAL de tu S3)
+  reto_comu: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/pointclouds/Puntos/cloud.js`,
   
   // Alternativas basadas en la estructura estándar de Potree
-  reto_comu_sources: `${CLOUDFRONT_BASE_URL}/pointclouds/Puntos/sources.json`,
-  reto_comu_data: `${CLOUDFRONT_BASE_URL}/pointclouds/Puntos/data/`,
-  reto_comu_metadata: `${CLOUDFRONT_BASE_URL}/pointclouds/Puntos/metadata.json`,
+  reto_comu_sources: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/pointclouds/Puntos/sources.json`,
+  reto_comu_data: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/pointclouds/Puntos/data/`,
+  reto_comu_metadata: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/pointclouds/Puntos/metadata.json`,
 };
 
 /**
  * Configuración de Librerías Potree
- * Basado en tu estructura real de S3: /static/build/potree/
+ * Basado en tu estructura REAL de S3
  */
 export const LIBRARIES = {
-  // Ruta principal de Potree (según tu S3)
-  potreeJS: `${CLOUDFRONT_BASE_URL}/static/build/potree/potree.js`,
-  potreeCSS: `${CLOUDFRONT_BASE_URL}/static/build/potree/potree.css`,
+  // Ruta principal de Potree (según tu S3 real)
+  potreeJS: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/build/potree/potree.js`,
+  potreeCSS: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/build/potree/potree.css`,
   
   // Source map si existe
-  potreeJSMap: `${CLOUDFRONT_BASE_URL}/static/build/potree/potree.js.map`,
+  potreeJSMap: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/build/potree/potree.js.map`,
   
   // Licencia
-  potreeLicense: `${CLOUDFRONT_BASE_URL}/static/build/potree/LICENSE`,
+  potreeLicense: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/build/potree/LICENSE`,
   
   // LazyLibs si existen
-  lazyLibs: `${CLOUDFRONT_BASE_URL}/static/build/potree/lazylibs/`,
-  
-  // THREE.js si está disponible en otra ubicación
-  threeJS: `${CLOUDFRONT_BASE_URL}/static/libs/three.js`,
+  lazyLibs: `${CLOUDFRONT_BASE_URL}/${S3_BASE_PATH}/static/build/potree/lazylibs/`,
 };
 
 /**
