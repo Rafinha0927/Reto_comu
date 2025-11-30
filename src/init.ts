@@ -3,7 +3,7 @@
  * Se ejecuta antes de renderizar la aplicación
  */
 
-import { awsConfig, POINTCLOUDS, LIBRARIES, EXAMPLES } from './config/aws';
+import { awsConfig, POINTCLOUDS, LIBRARIES} from './config/aws';
 
 // Declarar tipos globales
 declare global {
@@ -12,7 +12,6 @@ declare global {
       aws: typeof awsConfig;
       pointclouds: typeof POINTCLOUDS;
       libraries: typeof LIBRARIES;
-      examples: typeof EXAMPLES;
       runDiagnosis: () => Promise<void>;
       testCloudFront: (url: string) => Promise<boolean>;
       testAPI: (url: string) => Promise<boolean>;
@@ -135,7 +134,6 @@ export function info() {
   console.log('CloudFront Base:', awsConfig.cloudfrontBaseURL);
   console.log('Point Clouds:', POINTCLOUDS);
   console.log('Libraries:', LIBRARIES);
-  console.log('Examples:', EXAMPLES);
 }
 
 /**
@@ -155,7 +153,6 @@ export function initializeDashboard() {
       aws: awsConfig,
       pointclouds: POINTCLOUDS,
       libraries: LIBRARIES,
-      examples: EXAMPLES,
       runDiagnosis,
       testCloudFront,
       testAPI,
